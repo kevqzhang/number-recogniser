@@ -1,0 +1,23 @@
+{
+  "name": "number-recogniser",
+  "version": "1.0.0",
+  "description": "Recognises drawn number",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevqzhang/number-recogniser.git"
+  },
+  "author": "kevin zhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevqzhang/number-recogniser/issues"
+  },
+  "homepage": "https://github.com/kevqzhang/number-recogniser#readme",
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.16.0",
+    "@tensorflow/tfjs-node": "^3.16.0"
+  }
+}
