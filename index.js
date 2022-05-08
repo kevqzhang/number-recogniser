@@ -1,4 +1,28 @@
+const model = tf.sequential();
 
+const hidden1 = tf.layers.dense({
+    units: 16,             
+    inputShape: [784],  
+    activation: "sigmoid"
+});
+const hidden2 = tf.layers.dense({
+    units: 16,             
+    inputShape: [16],  
+    activation: "sigmoid"
+});
+const output = tf.layers.dense({
+    units: 10,
+    activation: "sigmoid"
+});
+
+model.add(hidden1);
+model.add(hidden2);
+model.add(output);
+
+model.compile({
+    optimizer: tf.train.sgd(0.1),
+    loss: tf.losses.meanSquaredError
+});
 
 window.addEventListener("load", () => {
     document.addEventListener("mousedown", startPainting);
