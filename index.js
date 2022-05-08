@@ -1,8 +1,13 @@
+
+
 window.addEventListener("load", () => {
     document.addEventListener("mousedown", startPainting);
     document.addEventListener("mouseup", stopPainting);
     document.addEventListener("mousemove", sketch);
     document.getElementById("erase").addEventListener("click", eraseCanvas);
+    document.getElementById("predict").addEventListener("click", predict);
+    
+    trainModel();
 });
 
 const canvas = document.querySelector("#canvas");
@@ -41,4 +46,22 @@ function sketch(event) {
 
 function eraseCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function trainModel() {
+    
+}
+
+function predict() {
+    const test = tf.tensor1d([1,2,3]);
+    test.print();
+    
+    const res = tf.tidy(() => {
+        ctx.drawImage(canvas, 0, 0, 28, 28);
+        let imageData = ctx.getImageData(0, 0, 28, 28);
+        let img = tf.browser.fromPixels(imageData, 1);
+        console.log(img);
+        img = img.reshape([1, 28, 28, 1]);
+        img = tf.cast(img, "float32");
+    });
 }

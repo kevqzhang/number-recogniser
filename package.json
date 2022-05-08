@@ -18,6 +18,8 @@
   "homepage": "https://github.com/kevqzhang/number-recogniser#readme",
   "dependencies": {
     "@tensorflow/tfjs": "^3.16.0",
-    "@tensorflow/tfjs-node": "^3.16.0"
+    "@tensorflow/tfjs-node": "^3.16.0",
+    "nodemon": "^2.0.16",
+    "parcel": "^2.5.0"
   }
 }
