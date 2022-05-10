@@ -2,7 +2,7 @@ const tf = require("@tensorflow/tfjs");
 const mnist = require("mnist");
 require("@tensorflow/tfjs-node");
 
-const TRAINING_DATA_BATCHSIZE = 2000
+const TRAINING_DATA_BATCHSIZE = 6000
 const TESTING_DATA_BATCHSIZE = 10;
 
 const model = tf.sequential();
@@ -47,8 +47,9 @@ const test = tf.tensor(testX, [TESTING_DATA_BATCHSIZE, 28, 28, 1]);
 
 model.fit(xs, ys, {
     shuffle: true,
-    epochs: 1000
+    epochs: 100
 }).then(() => {
     model.predict(test).print();
     console.log(testY);
+    model.save("file://" + __dirname + "/model");
 });
