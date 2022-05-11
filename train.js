@@ -63,7 +63,7 @@ const test = tf.tensor(testX, [TESTING_DATA_BATCHSIZE, 28, 28, 1]);
 
 model.fit(xs, ys, {
     shuffle: true,
-    epochs: 3
+    epochs: 2
 }).then(() => {
     model.predict(test).print();
     console.log(testY);
