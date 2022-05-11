@@ -30,10 +30,10 @@ function stopPainting(event) {
 function sketch(event) {
     if (!paint) return;
     ctx.beginPath();
-    ctx.lineWidth = 20;
+    ctx.lineWidth = 10;
 
     ctx.lineCap = "round";
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "#111111";
     
     ctx.moveTo(coord.x, coord.y);
     getPosition(event);
@@ -44,23 +44,32 @@ function sketch(event) {
 
 function eraseCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("answer").innerHTML = "";
 }
 
 function predict() {
     
-    const res = tf.tidy(() => {
-        ctx.drawImage(canvas, 0, 0, 28, 28);
-        
+    const res = tf.tidy(() => { 
+        ctx.drawImage(canvas, 0, 0, 28, 28);    
+
         let imageData = ctx.getImageData(0, 0, 28, 28);
         let img = tf.browser.fromPixels(imageData, 1);
 
+        img.print();
         img = img.reshape([1, 28, 28, 1]);
         img = tf.cast(img, "float32");
+
         img.array().then((result) => {
+            console.log(result);
+
             let req = new XMLHttpRequest()
             req.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 201){
                     console.log(this.responseText);
+                    let result = JSON.parse(this.responseText);
+                    console.log(result.percent + " " + result.num);
+                    let ans = "I'm " + (result.percent * 100) + "% sure that the number is " + result.num;
+                    document.getElementById("answer").innerHTML = ans;
                 }
             }
             req.open("POST", "http://localhost:3000/imgData");

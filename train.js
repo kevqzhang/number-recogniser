@@ -2,7 +2,7 @@ const tf = require("@tensorflow/tfjs");
 const mnist = require("mnist");
 require("@tensorflow/tfjs-node");
 
-const TRAINING_DATA_BATCHSIZE = 6000
+const TRAINING_DATA_BATCHSIZE = 8000
 const TESTING_DATA_BATCHSIZE = 10;
 
 const model = tf.sequential();
@@ -11,7 +11,11 @@ model.add(tf.layers.flatten({
     inputShape: [28, 28, 1],  
 }));
 model.add(tf.layers.dense({
-    units: 16,             
+    units: 128,             
+    activation: "sigmoid"
+}));
+model.add(tf.layers.dense({
+    units: 128,             
     activation: "sigmoid"
 }));
 model.add(tf.layers.dense({
@@ -20,7 +24,7 @@ model.add(tf.layers.dense({
 }));
 
 model.compile({
-    optimizer: tf.train.sgd(0.6),
+    optimizer: "adam",
     loss: tf.losses.meanSquaredError
 });
 
@@ -51,5 +55,5 @@ model.fit(xs, ys, {
 }).then(() => {
     model.predict(test).print();
     console.log(testY);
-    model.save("file://" + __dirname + "/model");
+    model.save("file://" + __dirname + "/static/model");
 });

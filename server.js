@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const tf = require("@tensorflow/tfjs");
+const { addN } = require("@tensorflow/tfjs");
 require("@tensorflow/tfjs-node")
 
 app.use(express.static(__dirname + "/static"));
@@ -17,7 +18,20 @@ app.post("/imgData", express.json(), async (req, res) => {
         "file://C:/Users/kcraf/Desktop/Untitled Workspace/Machine learning/number-recogniser/static/model/model.json"
     );
     model.predict(imgData).print();
-    res.status(201).send(JSON.stringify({data: "hi"}));
+    let result = model.predict(imgData);
+    const ans = result.arraySync()[0];
+
+    let index = 1;
+    let max = 0;
+
+    for (let i = 0; i < ans.length; ++i) {
+        if (ans[i] > max) {
+            max = ans[i];
+            index = i;
+        }
+    }
+    
+    res.status(201).send(JSON.stringify({percent: max, num: index}));
 });
 
 app.listen(3000);
